@@ -2,7 +2,6 @@ import express from 'express'
 import mongoose from 'mongoose'
 import dotenv from 'dotenv';
 dotenv.config();
-import path from 'path'
 
 const app = express();
 app.use(express.json());
@@ -52,6 +51,47 @@ app.get("/bookings/:id", async (req, res)=>{
             id: id
         },
         message: 'Booking fetched'
+    })
+})
+
+app.put("/bookings/:id", async (req, res)=>{
+    // update booking
+    const {id} = req.params;
+
+    res.json({
+        success:true,
+        data: {
+          id: id  
+        },
+        message: 'Booking updated'
+    })
+})
+
+app.patch("/bookings/:id", async (req, res)=>{
+    // update booking
+
+    const {id} = req.params;
+    // update booking logic
+
+    res.json({
+        success: true,
+        data: {
+            id: id
+        },
+        message: 'Booking updated'
+    })
+})
+
+app.delete("/bookings/:id", async (req, res)=>{
+    // delete booking
+    const {id} = req.params;
+
+    res.json({
+        success: true,
+        data: {
+            id: id
+        },
+        message: 'Booking deleted'
     })
 })
 

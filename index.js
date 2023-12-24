@@ -3,6 +3,8 @@ import mongoose from 'mongoose'
 import dotenv from 'dotenv';
 dotenv.config();
 
+import { postApiBooking } from './controllers/booking';
+
 const app = express();
 app.use(express.json());
 
@@ -15,24 +17,52 @@ const connectDB = async () =>{
 };
 connectDB(); 
 
-app.get('/health', (req, res) => {
+
+// bus api
+app.post('/api/buses', (req, res)=>{
+
+})
+app.get('/api/v1/buses', (req, res)=>{
     res.send({
         success: true,
-        message: 'Server is running'
-    });
-});
-
-app.post("/bookings", async (req, res)=>{
-    // const {} = req.body;
-    // create booking
-    res.json({
-        success: true,
-        data: {},
-        message: 'Booking created'
+        data:[
+            {
+                id: 1,
+                name: 'Bus 1',
+                seats: 20,
+            },
+            {
+                id: 1,
+                name: 'Bus 2',
+                seats: 20
+            }
+        ]  
     })
-});
+})
 
-app.get("/bookings", async (req, res)=>{
+app.get('/api/v2/buses', (req, res)=>{
+    res.send({
+        success: true,
+        data:[
+            {
+                id: 1,
+                name: 'Bus 1',
+                totalSeats: 20,
+            },
+            {
+                id: 1,
+                name: 'Bus 2',
+                totalSeats: 20
+            }
+        ]  
+    })
+})
+
+
+// booking api
+app.post("/api/bookings", postApiBooking);
+
+app.get("/api/bookings", async (req, res)=>{
     // get all bookings
     res.json({
         success: true,
@@ -41,10 +71,10 @@ app.get("/bookings", async (req, res)=>{
     })
 });
 
-app.get("/bookings/:id", async (req, res)=>{
+app.get("/api/bookings/:id", async (req, res)=>{
     // get single booking
     const {id} = req.params;
-
+    
     res.json({
         success: true,
         data: {
@@ -54,7 +84,7 @@ app.get("/bookings/:id", async (req, res)=>{
     })
 })
 
-app.put("/bookings/:id", async (req, res)=>{
+app.put("/api/bookings/:id", async (req, res)=>{
     // update booking
     const {id} = req.params;
 
@@ -67,7 +97,7 @@ app.put("/bookings/:id", async (req, res)=>{
     })
 })
 
-app.patch("/bookings/:id", async (req, res)=>{
+app.patch("/api/bookings/:id", async (req, res)=>{
     // update booking
 
     const {id} = req.params;
@@ -82,7 +112,7 @@ app.patch("/bookings/:id", async (req, res)=>{
     })
 })
 
-app.delete("/bookings/:id", async (req, res)=>{
+app.delete("/api/bookings/:id", async (req, res)=>{
     // delete booking
     const {id} = req.params;
 

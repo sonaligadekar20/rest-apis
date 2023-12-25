@@ -76,7 +76,8 @@ const getApiBookingById = async (req, res) => {
         })
     }
     catch (err) {
-        res.json({
+        return responder({
+            res,
             success: false,
             message: err.message
         })

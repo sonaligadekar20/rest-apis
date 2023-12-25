@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 import { deleteApiBooking, getApiBooking, getApiBookingById, postApiBooking, putApiBooking} from './controllers/booking.js';
+import { deleteApiBus, getApiBusById, getApiBusv1, getApiBusv2, patchApiBus, postApiBus, putApiBus } from './controllers/bus.js';
 
 const app = express();
 app.use(express.json());
@@ -17,48 +18,20 @@ const connectDB = async () =>{
 };
 connectDB(); 
 
-
 // bus api
-app.post('/api/buses', (req, res)=>{
+app.post('/api/buses', postApiBus)
 
-})
+app.get('/api/v1/buses', getApiBusv1)
 
-app.get('/api/v1/buses', (req, res)=>{
-    res.send({
-        success: true,
-        data:[
-            {
-                id: 1,
-                name: 'Bus 1',
-                seats: 20,
-            },
-            {
-                id: 1,
-                name: 'Bus 2',
-                seats: 20
-            }
-        ]  
-    })
-})
+app.get('/api/v2/buses', getApiBusv2)
 
-app.get('/api/v2/buses', (req, res)=>{
-    res.send({
-        success: true,
-        data:[
-            {
-                id: 1,
-                name: 'Bus 1',
-                totalSeats: 20,
-            },
-            {
-                id: 1,
-                name: 'Bus 2',
-                totalSeats: 20
-            }
-        ]  
-    })
-})
+app.get("/api/buses/:id", getApiBusById );
 
+app.put("/api/buses/:id", putApiBus);
+
+app.patch("/app/buses/:id", patchApiBus);
+
+app.delete("/api/delete/:id", deleteApiBus)
 
 // booking api
 app.post("/api/bookings", postApiBooking);
@@ -68,22 +41,6 @@ app.get("/api/bookings", getApiBooking);
 app.get("/api/bookings/:id", getApiBookingById);
     
 app.put("/api/bookings/:id", putApiBooking );
-
-// app.patch("/api/bookings/:id", 
-// async (req, res)=>{
-//     // update booking
-
-//     const {id} = req.params;
-//     // update booking logic
-
-//     res.json({
-//         success: true,
-//         data: {
-//             id: id
-//         },
-//         message: 'Booking updated'
-//     })
-// })
 
 app.delete("/api/bookings/:id", deleteApiBooking)
 

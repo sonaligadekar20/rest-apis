@@ -3,7 +3,7 @@ import mongoose from 'mongoose'
 import dotenv from 'dotenv';
 dotenv.config();
 
-import { getApiBooking, postApiBooking } from './controllers/booking.js';
+import { deleteApiBooking, getApiBooking, getApiBookingById, postApiBooking, putApiBooking} from './controllers/booking.js';
 
 const app = express();
 app.use(express.json());
@@ -22,6 +22,7 @@ connectDB();
 app.post('/api/buses', (req, res)=>{
 
 })
+
 app.get('/api/v1/buses', (req, res)=>{
     res.send({
         success: true,
@@ -64,59 +65,27 @@ app.post("/api/bookings", postApiBooking);
 
 app.get("/api/bookings", getApiBooking);
 
-app.get("/api/bookings/:id", async (req, res)=>{
-    // get single booking
-    const {id} = req.params;
+app.get("/api/bookings/:id", getApiBookingById);
     
-    res.json({
-        success: true,
-        data: {
-            id: id
-        },
-        message: 'Booking fetched'
-    })
-})
+app.put("/api/bookings/:id", putApiBooking );
 
-app.put("/api/bookings/:id", async (req, res)=>{
-    // update booking
-    const {id} = req.params;
+// app.patch("/api/bookings/:id", 
+// async (req, res)=>{
+//     // update booking
 
-    res.json({
-        success:true,
-        data: {
-          id: id  
-        },
-        message: 'Booking updated'
-    })
-})
+//     const {id} = req.params;
+//     // update booking logic
 
-app.patch("/api/bookings/:id", async (req, res)=>{
-    // update booking
+//     res.json({
+//         success: true,
+//         data: {
+//             id: id
+//         },
+//         message: 'Booking updated'
+//     })
+// })
 
-    const {id} = req.params;
-    // update booking logic
-
-    res.json({
-        success: true,
-        data: {
-            id: id
-        },
-        message: 'Booking updated'
-    })
-})
-
-app.delete("/api/bookings/:id", async (req, res)=>{
-    // delete booking
-    const {id} = req.params;
-
-    res.json({
-        success: true,
-        data: {
-            id: id
-        },
-        message: 'Booking deleted'
-    })
-})
+app.delete("/api/bookings/:id", deleteApiBooking)
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

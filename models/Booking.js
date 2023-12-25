@@ -15,7 +15,7 @@ const bookingSchema = new Schema({
         required: true,
         unique: true
     },
-    SeatNumber: {
+    seatNumber: {
         type: Number,
         required: true,
         unique: true
@@ -30,7 +30,8 @@ const bookingSchema = new Schema({
         required: true,
     },
 }, 
-{ timestamps: true })
+{ timestamps: true }
+)
 
 
 const Booking = model('Booking', bookingSchema)

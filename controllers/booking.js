@@ -1,23 +1,39 @@
-import Booking from "./../models/Booking.js";
+import Booking from "../models/Booking.js";
+import { responder } from "../util.js";
 
-const postApiBooking =  async (req, res)=>{
-    const {bus, passengerName, mobileNo, seatNumber, to, from } = req.body;
+const postApiBooking = async (req, res) => {
+    const { bus, passengerName, mobileNo, seatNumber, to, from } = req.body;
 
     const booking = new Booking({
-        bus, 
+        bus,
         passengerName,
         mobileNo,
         seatNumber,
-        to, 
-        from 
-    })
-    // const {} = req.body;
-    // create booking
-    // res.status(201).json({
-    //     success: true,
-    //     data: {},
-    //     message: 'Booking created'
-    // })
+        to,
+        from
+    });
+    try {
+        const savedBooking = await booking.save();
+        return responder({ res, success: true, message: 'Booking created.', data: savedBooking });
+    }
+    catch (err) {
+        return responder({
+            res,
+            success: false,
+            message: err.message
+        })
+    }
+
 }
 
-export {postApiBooking};
+const getApiBooking = async (req, res) =>{
+    const allBooking = await Booking.find();
+
+    return responder({res,
+         success: true, 
+         message: 'Successfully feactched allBooking',
+         data: allBooking
+    })
+}
+
+export { postApiBooking, getApiBooking};

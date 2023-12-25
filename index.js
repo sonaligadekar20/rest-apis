@@ -3,7 +3,7 @@ import mongoose from 'mongoose'
 import dotenv from 'dotenv';
 dotenv.config();
 
-import { postApiBooking } from './controllers/booking';
+import { getApiBooking, postApiBooking } from './controllers/booking.js';
 
 const app = express();
 app.use(express.json());
@@ -62,14 +62,7 @@ app.get('/api/v2/buses', (req, res)=>{
 // booking api
 app.post("/api/bookings", postApiBooking);
 
-app.get("/api/bookings", async (req, res)=>{
-    // get all bookings
-    res.json({
-        success: true,
-        data: [],
-        message: 'Booking fetched'
-    })
-});
+app.get("/api/bookings", getApiBooking);
 
 app.get("/api/bookings/:id", async (req, res)=>{
     // get single booking

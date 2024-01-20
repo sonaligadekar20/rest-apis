@@ -29,7 +29,7 @@ app.get("/api/buses/:id", getApiBusById );
 
 app.put("/api/buses/:id", putApiBus);
 
-app.patch("/app/buses/:id", patchApiBus);
+app.patch("/api/buses/:id", patchApiBus);
 
 app.delete("/api/delete/:id", deleteApiBus)
 

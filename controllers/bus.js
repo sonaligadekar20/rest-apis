@@ -115,18 +115,19 @@ const patchApiBus = async (req, res) => {
             {
                 $set:{ busNumber: busNumber }
             } );
-    
+            
+            const updatedBus = await Bus.findOne({_id: id});
             return responder ({
                 res,
-                success: "true",
-                data: {id : id} ,
-                message: " Bus Number updated successfully."
+                success: true,
+                data: updatedBus,
+                message: "Bus Number updated successfully."
             })
     }
     catch(err){
         return responder ({
             res,
-            success: "false",
+            success: false,
             message: err.message
         })
     }
